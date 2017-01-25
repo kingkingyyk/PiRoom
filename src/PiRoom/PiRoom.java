@@ -129,7 +129,7 @@ public class PiRoom {
 	}
 	
 	public static void setLightAutomationLightThreshold (double d, boolean recurse) {
-		LightAutomationMotionThreshold=d;
+		LightAutomationLightThreshold=d;
 		if (ui!=null) ui.setLightAutomationLightValue(d,recurse);
 	}
 	
