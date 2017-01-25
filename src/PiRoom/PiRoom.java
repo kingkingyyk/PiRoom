@@ -29,7 +29,10 @@ public class PiRoom {
 	public static MCP3424GpioProvider ADC;
 	public static GpioPinAnalogInput SENSOR_LIGHT;
 	public static GpioPinAnalogInput SENSOR_TEMPERATURE;
+	
 	public static double PiTemperatureReading=0.0;
+	public static int PiClockSpeedReading=0;
+	public static double PiMemoryUsageReading=0.0;
 	public static double MotionReading=0.0;
 	public static double LightReading=0.0;
 	public static double TemperatureReading=0.0;
@@ -74,10 +77,14 @@ public class PiRoom {
 			@Override
 			public void run() {
 				PiTemperatureReading=Utility.getPiTemperature();
+				PiClockSpeedReading=Utility.getPiClockSpeed();
+				PiMemoryUsageReading=Utility.getPiMemoryUsage();
 				MotionReading=MOTION_SENSOR.getCount();
 				//LightReading=SENSOR_LIGHT.getValue();
 				//TemperatureReading=SENSOR_TEMPERATURE.getValue();
 				ui.setPiTemperatureReading(PiTemperatureReading);
+				ui.setPiClockSpeedReading(PiClockSpeedReading);
+				ui.setPiMemoryUsageReading(PiMemoryUsageReading);
 				ui.setMotionReading(MotionReading);
 				ui.setLightReading(LightReading);
 				ui.setTemperatureReading(TemperatureReading);
@@ -169,8 +176,27 @@ public class PiRoom {
 	public static Object processSocket (String opcode, Object operand) {
 		Object toReturn=null;
 		switch (opcode) {
+			case "GetPeriodicReadings" : {
+				ArrayList<Object> data=new ArrayList<Object>();
+				data.add(PiTemperatureReading);
+				data.add(PiClockSpeedReading);
+				data.add(PiMemoryUsageReading);
+				data.add(MotionReading);
+				data.add(LightReading);
+				data.add(TemperatureReading);
+				toReturn=data;
+				break;
+			}
 			case "GetPiTemperatureReading" : {
 				toReturn=PiTemperatureReading;
+				break;
+			}
+			case "GetPiClockSpeedReading" : {
+				toReturn=PiClockSpeedReading;
+				break;
+			}
+			case "GetPiMemoryUsageReading" : {
+				toReturn=PiMemoryUsageReading;
 				break;
 			}
 			case "GetMotionReading" : {

@@ -42,12 +42,16 @@ public class MainUI extends JFrame {
 	private JLabel lblCtrlTime;
 	private JLabel lblPiTemperature;
 	private JLabel lblPiTemperatureReading;
+	private JLabel lblPiClockSpeed;
+	private JLabel lblPiClockSpeedReading;
+	private JLabel lblPiMemoryUsage;
+	private JLabel lblPiMemoryUsageReading;
 
 	public MainUI() {
 		setResizable(false);
 		setTitle("Pi Room");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 541, 384);
+		setBounds(100, 100, 723, 384);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -74,7 +78,7 @@ public class MainUI extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Fan Control", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 117, 514, 108);
+		panel_1.setBounds(10, 117, 697, 108);
 		contentPane.add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
@@ -164,12 +168,12 @@ public class MainUI extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Status", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(277, 11, 247, 95);
+		panel_2.setBounds(277, 11, 430, 95);
 		contentPane.add(panel_2);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_2.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 		
@@ -184,10 +188,26 @@ public class MainUI extends JFrame {
 		lblPiTemperatureReading.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_lblPiTemperatureReading = new GridBagConstraints();
 		gbc_lblPiTemperatureReading.anchor = GridBagConstraints.WEST;
-		gbc_lblPiTemperatureReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPiTemperatureReading.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPiTemperatureReading.gridx = 1;
 		gbc_lblPiTemperatureReading.gridy = 0;
 		panel_2.add(lblPiTemperatureReading, gbc_lblPiTemperatureReading);
+		
+		lblPiClockSpeed = new JLabel("Clock Speed :");
+		GridBagConstraints gbc_lblPiClockSpeed = new GridBagConstraints();
+		gbc_lblPiClockSpeed.anchor = GridBagConstraints.EAST;
+		gbc_lblPiClockSpeed.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPiClockSpeed.gridx = 3;
+		gbc_lblPiClockSpeed.gridy = 0;
+		panel_2.add(lblPiClockSpeed, gbc_lblPiClockSpeed);
+		
+		lblPiClockSpeedReading = new JLabel("0 MHz");
+		GridBagConstraints gbc_lblPiClockSpeedReading = new GridBagConstraints();
+		gbc_lblPiClockSpeedReading.anchor = GridBagConstraints.WEST;
+		gbc_lblPiClockSpeedReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPiClockSpeedReading.gridx = 4;
+		gbc_lblPiClockSpeedReading.gridy = 0;
+		panel_2.add(lblPiClockSpeedReading, gbc_lblPiClockSpeedReading);
 		
 		JLabel lblMotion = new JLabel("Motion :");
 		GridBagConstraints gbc_lblMotion = new GridBagConstraints();
@@ -200,10 +220,25 @@ public class MainUI extends JFrame {
 		lblMotionReading = new JLabel("0 move/s");
 		GridBagConstraints gbc_lblMotionReading = new GridBagConstraints();
 		gbc_lblMotionReading.anchor = GridBagConstraints.WEST;
-		gbc_lblMotionReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblMotionReading.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMotionReading.gridx = 1;
 		gbc_lblMotionReading.gridy = 1;
 		panel_2.add(lblMotionReading, gbc_lblMotionReading);
+		
+		lblPiMemoryUsage = new JLabel("Memory Usage :");
+		GridBagConstraints gbc_lblPiMemoryUsage = new GridBagConstraints();
+		gbc_lblPiMemoryUsage.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPiMemoryUsage.gridx = 3;
+		gbc_lblPiMemoryUsage.gridy = 1;
+		panel_2.add(lblPiMemoryUsage, gbc_lblPiMemoryUsage);
+		
+		lblPiMemoryUsageReading = new JLabel("0.00 %");
+		GridBagConstraints gbc_lblPiMemoryUsageReading = new GridBagConstraints();
+		gbc_lblPiMemoryUsageReading.anchor = GridBagConstraints.WEST;
+		gbc_lblPiMemoryUsageReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPiMemoryUsageReading.gridx = 4;
+		gbc_lblPiMemoryUsageReading.gridy = 1;
+		panel_2.add(lblPiMemoryUsageReading, gbc_lblPiMemoryUsageReading);
 		
 		JLabel lblLight = new JLabel("Light :");
 		GridBagConstraints gbc_lblLight = new GridBagConstraints();
@@ -216,7 +251,7 @@ public class MainUI extends JFrame {
 		lblLightReading = new JLabel("0%");
 		GridBagConstraints gbc_lblLightReading = new GridBagConstraints();
 		gbc_lblLightReading.anchor = GridBagConstraints.WEST;
-		gbc_lblLightReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblLightReading.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLightReading.gridx = 1;
 		gbc_lblLightReading.gridy = 2;
 		panel_2.add(lblLightReading, gbc_lblLightReading);
@@ -231,6 +266,7 @@ public class MainUI extends JFrame {
 		
 		lblTemperatureReading = new JLabel("0 °C");
 		GridBagConstraints gbc_lblTemperatureReading = new GridBagConstraints();
+		gbc_lblTemperatureReading.insets = new Insets(0, 0, 0, 5);
 		gbc_lblTemperatureReading.anchor = GridBagConstraints.WEST;
 		gbc_lblTemperatureReading.gridx = 1;
 		gbc_lblTemperatureReading.gridy = 3;
@@ -238,7 +274,7 @@ public class MainUI extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Light Control", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3.setBounds(10, 236, 514, 108);
+		panel_3.setBounds(10, 236, 697, 108);
 		contentPane.add(panel_3);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
 		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0};
@@ -388,6 +424,14 @@ public class MainUI extends JFrame {
 	
 	public void setPiTemperatureReading(double value) {
 		if (lblPiTemperatureReading!=null) lblPiTemperatureReading.setText(String.format("%.2f °C",value));
+	}
+	
+	public void setPiClockSpeedReading(int value) {
+		if (lblPiClockSpeedReading!=null) lblPiClockSpeedReading.setText(String.format("%d MHz",value));
+	}
+	
+	public void setPiMemoryUsageReading(double value) {
+		if (lblPiMemoryUsageReading!=null) lblPiMemoryUsageReading.setText(String.format("%.2f %%",value));
 	}
 	
 	public void setMotionReading(double value) {

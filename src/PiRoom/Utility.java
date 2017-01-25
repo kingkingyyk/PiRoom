@@ -10,4 +10,18 @@ public class Utility {
 		} catch (Exception e) {}
 		return 0.0;
 	}
+	
+	public static int getPiClockSpeed () {
+		try {
+			return (int)(SystemInfo.getClockFrequencyArm()/1000000);
+		} catch (Exception e) {}
+		return 0;
+	}
+
+	public static double getPiMemoryUsage () {
+		try {
+			return (SystemInfo.getMemoryUsed()/(double)SystemInfo.getMemoryTotal())*100;
+		} catch (Exception e) {}
+		return 0.0;
+	}
 }
