@@ -29,6 +29,10 @@ public class PiRoom {
 	public static MCP3424GpioProvider ADC;
 	public static GpioPinAnalogInput SENSOR_LIGHT;
 	public static GpioPinAnalogInput SENSOR_TEMPERATURE;
+	public static double PiTemperatureReading=0.0;
+	public static double MotionReading=0.0;
+	public static double LightReading=0.0;
+	public static double TemperatureReading=0.0;
 	
 	public static final GpioPinDigitalOutput RELAY_FAN=GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_00);
 	public static final GpioPinDigitalOutput RELAY_LIGHT=GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_02);
@@ -69,7 +73,14 @@ public class PiRoom {
 
 			@Override
 			public void run() {
-				ui.setMotionReading(MOTION_SENSOR.getCount());
+				PiTemperatureReading=Utility.getPiTemperature();
+				MotionReading=MOTION_SENSOR.getCount();
+				//LightReading=SENSOR_LIGHT.getValue();
+				//TemperatureReading=SENSOR_TEMPERATURE.getValue();
+				ui.setPiTemperatureReading(PiTemperatureReading);
+				ui.setMotionReading(MotionReading);
+				ui.setLightReading(LightReading);
+				ui.setTemperatureReading(TemperatureReading);
 			}
 			
 		},0,1000);
@@ -133,6 +144,10 @@ public class PiRoom {
 		if (ui!=null) ui.setLightAutomationLightValue(d,recurse);
 	}
 	
+	public static void startRecordReading() {
+		
+	}
+	
 	public static void startConnection() throws Exception {
 		System.out.println("===========Starts Listening on Port 14521===========");
 		@SuppressWarnings("resource")
@@ -154,16 +169,20 @@ public class PiRoom {
 	public static Object processSocket (String opcode, Object operand) {
 		Object toReturn=null;
 		switch (opcode) {
+			case "GetPiTemperatureReading" : {
+				toReturn=PiTemperatureReading;
+				break;
+			}
 			case "GetMotionReading" : {
-				toReturn=MOTION_SENSOR.getCount();
+				toReturn=MotionReading;
 				break;
 			}
 			case "GetLightReading" : {
-				toReturn=SENSOR_LIGHT.getValue();
+				toReturn=LightReading;
 				break;
 			}
 			case "GetTemperatureReading" : {
-				toReturn=SENSOR_TEMPERATURE.getValue();
+				toReturn=TemperatureReading;
 				break;
 			}
 			case "SetAutomationStatus" : {

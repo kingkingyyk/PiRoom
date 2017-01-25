@@ -40,12 +40,14 @@ public class MainUI extends JFrame {
 	private JLabel lblLightCtrlMotion;
 	private JLabel lblLightCtrlLight;
 	private JLabel lblCtrlTime;
+	private JLabel lblPiTemperature;
+	private JLabel lblPiTemperatureReading;
 
 	public MainUI() {
 		setResizable(false);
 		setTitle("Pi Room");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 541, 350);
+		setBounds(100, 100, 541, 384);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -53,7 +55,7 @@ public class MainUI extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Control Mode", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 257, 75);
+		panel.setBounds(10, 11, 257, 95);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -63,16 +65,16 @@ public class MainUI extends JFrame {
 				PiRoom.setAutomationStatus(tglbtnCtrl.isSelected());
 			}
 		});
-		tglbtnCtrl.setBounds(10, 21, 192, 43);
+		tglbtnCtrl.setBounds(10, 21, 192, 63);
 		panel.add(tglbtnCtrl);
 		
 		lblCtrlTime = new JLabel("N/A");
-		lblCtrlTime.setBounds(208, 35, 39, 14);
+		lblCtrlTime.setBounds(208, 45, 39, 14);
 		panel.add(lblCtrlTime);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Fan Control", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 90, 514, 108);
+		panel_1.setBounds(10, 117, 514, 108);
 		contentPane.add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
@@ -162,21 +164,37 @@ public class MainUI extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Status", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(277, 11, 247, 75);
+		panel_2.setBounds(277, 11, 247, 95);
 		contentPane.add(panel_2);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
+		
+		lblPiTemperature = new JLabel("Pi's Temperature :");
+		GridBagConstraints gbc_lblPiTemperature = new GridBagConstraints();
+		gbc_lblPiTemperature.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPiTemperature.gridx = 0;
+		gbc_lblPiTemperature.gridy = 0;
+		panel_2.add(lblPiTemperature, gbc_lblPiTemperature);
+		
+		lblPiTemperatureReading = new JLabel("0 \u00B0C");
+		lblPiTemperatureReading.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblPiTemperatureReading = new GridBagConstraints();
+		gbc_lblPiTemperatureReading.anchor = GridBagConstraints.WEST;
+		gbc_lblPiTemperatureReading.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPiTemperatureReading.gridx = 1;
+		gbc_lblPiTemperatureReading.gridy = 0;
+		panel_2.add(lblPiTemperatureReading, gbc_lblPiTemperatureReading);
 		
 		JLabel lblMotion = new JLabel("Motion :");
 		GridBagConstraints gbc_lblMotion = new GridBagConstraints();
 		gbc_lblMotion.anchor = GridBagConstraints.EAST;
 		gbc_lblMotion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMotion.gridx = 0;
-		gbc_lblMotion.gridy = 0;
+		gbc_lblMotion.gridy = 1;
 		panel_2.add(lblMotion, gbc_lblMotion);
 		
 		lblMotionReading = new JLabel("0 move/s");
@@ -184,7 +202,7 @@ public class MainUI extends JFrame {
 		gbc_lblMotionReading.anchor = GridBagConstraints.WEST;
 		gbc_lblMotionReading.insets = new Insets(0, 0, 5, 0);
 		gbc_lblMotionReading.gridx = 1;
-		gbc_lblMotionReading.gridy = 0;
+		gbc_lblMotionReading.gridy = 1;
 		panel_2.add(lblMotionReading, gbc_lblMotionReading);
 		
 		JLabel lblLight = new JLabel("Light :");
@@ -192,7 +210,7 @@ public class MainUI extends JFrame {
 		gbc_lblLight.anchor = GridBagConstraints.EAST;
 		gbc_lblLight.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLight.gridx = 0;
-		gbc_lblLight.gridy = 1;
+		gbc_lblLight.gridy = 2;
 		panel_2.add(lblLight, gbc_lblLight);
 		
 		lblLightReading = new JLabel("0%");
@@ -200,7 +218,7 @@ public class MainUI extends JFrame {
 		gbc_lblLightReading.anchor = GridBagConstraints.WEST;
 		gbc_lblLightReading.insets = new Insets(0, 0, 5, 0);
 		gbc_lblLightReading.gridx = 1;
-		gbc_lblLightReading.gridy = 1;
+		gbc_lblLightReading.gridy = 2;
 		panel_2.add(lblLightReading, gbc_lblLightReading);
 		
 		JLabel lblTemperature = new JLabel("Temperature :");
@@ -208,19 +226,19 @@ public class MainUI extends JFrame {
 		gbc_lblTemperature.insets = new Insets(0, 0, 0, 5);
 		gbc_lblTemperature.anchor = GridBagConstraints.EAST;
 		gbc_lblTemperature.gridx = 0;
-		gbc_lblTemperature.gridy = 2;
+		gbc_lblTemperature.gridy = 3;
 		panel_2.add(lblTemperature, gbc_lblTemperature);
 		
 		lblTemperatureReading = new JLabel("0 °C");
 		GridBagConstraints gbc_lblTemperatureReading = new GridBagConstraints();
 		gbc_lblTemperatureReading.anchor = GridBagConstraints.WEST;
 		gbc_lblTemperatureReading.gridx = 1;
-		gbc_lblTemperatureReading.gridy = 2;
+		gbc_lblTemperatureReading.gridy = 3;
 		panel_2.add(lblTemperatureReading, gbc_lblTemperatureReading);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Light Control", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3.setBounds(10, 209, 514, 108);
+		panel_3.setBounds(10, 236, 514, 108);
 		contentPane.add(panel_3);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
 		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0};
@@ -368,6 +386,10 @@ public class MainUI extends JFrame {
 		if (tglbtnLightCtrl!=null) tglbtnLightCtrl.setSelected(flag);
 	}
 	
+	public void setPiTemperatureReading(double value) {
+		if (lblPiTemperatureReading!=null) lblPiTemperatureReading.setText(String.format("%.2f °C",value));
+	}
+	
 	public void setMotionReading(double value) {
 		if (lblMotionReading!=null) lblMotionReading.setText(String.format("%.2f move/s",value));
 	}
@@ -377,7 +399,7 @@ public class MainUI extends JFrame {
 	}
 	
 	public void setTemperatureReading(double value) {
-		if (lblLightReading!=null) lblLightReading.setText(String.format("%.2f °C",value));
+		if (lblTemperatureReading!=null) lblTemperatureReading.setText(String.format("%.2f °C",value));
 	}
 	
 	public void setFanAutomationMotionValue (double value, boolean updateSlider) {
