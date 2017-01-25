@@ -10,18 +10,18 @@ public class AutomationTask extends TimerTask {
 		
 		if (countdown==0) {
 			if (PiRoom.RELAY_FAN.isHigh()) {
-				if (PiRoom.MOTION_SENSOR.getCount()>=PiRoom.FanAutomationMotionThreshold && PiRoom.SENSOR_TEMPERATURE.getValue()>=PiRoom.FanAutomationTemperatureThreshold)
+				if (PiRoom.MotionReading>=PiRoom.FanAutomationMotionThreshold && PiRoom.TemperatureReading>=PiRoom.FanAutomationTemperatureThreshold)
 					PiRoom.setFanStatus(true,true,true);
 			} else {
-				if (PiRoom.MOTION_SENSOR.getCount()<PiRoom.FanAutomationMotionThreshold && PiRoom.SENSOR_TEMPERATURE.getValue()<PiRoom.FanAutomationTemperatureThreshold)
+				if (PiRoom.MotionReading<PiRoom.FanAutomationMotionThreshold && PiRoom.TemperatureReading<PiRoom.FanAutomationTemperatureThreshold)
 					PiRoom.setFanStatus(false,true,true);
 			}
 			
 			if (PiRoom.RELAY_LIGHT.isHigh()) {
-				if (PiRoom.MOTION_SENSOR.getCount()>=PiRoom.LightAutomationMotionThreshold && PiRoom.SENSOR_LIGHT.getValue()>=PiRoom.LightAutomationLightThreshold)
+				if (PiRoom.MotionReading>=PiRoom.LightAutomationMotionThreshold && PiRoom.LightReading>=PiRoom.LightAutomationLightThreshold)
 					PiRoom.setLightStatus(true,true,true);
 			} else {
-				if (PiRoom.MOTION_SENSOR.getCount()<PiRoom.LightAutomationMotionThreshold && PiRoom.SENSOR_LIGHT.getValue()<PiRoom.LightAutomationLightThreshold)
+				if (PiRoom.MotionReading<PiRoom.LightAutomationMotionThreshold && PiRoom.LightReading<PiRoom.LightAutomationLightThreshold)
 					PiRoom.setLightStatus(false,true,true);
 			}
 			countdown=60;
