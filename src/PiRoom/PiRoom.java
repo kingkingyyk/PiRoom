@@ -63,7 +63,7 @@ public class PiRoom {
 	public static void main (String [] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
-		//initializeADC();
+		initializeADC();
 		
 		ui=new MainUI();
 		ui.setLocationRelativeTo(null);
@@ -80,8 +80,9 @@ public class PiRoom {
 				PiClockSpeedReading=Utility.getPiClockSpeed();
 				PiMemoryUsageReading=Utility.getPiMemoryUsage();
 				MotionReading=MOTION_SENSOR.getCount();
-				//LightReading=SENSOR_LIGHT.getValue();
-				//TemperatureReading=SENSOR_TEMPERATURE.getValue();
+				LightReading=(ADC.getAnalogValue(SENSOR_LIGHT)/2)*2.048*100; // voltage divider -> 3K + 2K, so we will get max 2V...
+				TemperatureReading=(2.0/ADC.getAnalogValue(SENSOR_TEMPERATURE)-1); //ported from : http://wiki.seeed.cc/Grove-Temperature_Sensor_V1.2/
+				TemperatureReading=1.0/(Math.log(TemperatureReading)/4275+1/298.15)-273.15;
 				ui.setPiTemperatureReading(PiTemperatureReading);
 				ui.setPiClockSpeedReading(PiClockSpeedReading);
 				ui.setPiMemoryUsageReading(PiMemoryUsageReading);
@@ -178,6 +179,10 @@ public class PiRoom {
 		switch (opcode) {
 			case "GetPeriodicReadings" : {
 				ArrayList<Object> data=new ArrayList<Object>();
+				data.add(AutomationOn ? 1 : 0);
+				data.add(AutoTask==null ? 0 : AutoTask.getCountdown());
+				data.add(RELAY_FAN.isLow() ? 1 : 0);
+				data.add(RELAY_LIGHT.isLow() ? 1 : 0);
 				data.add(PiTemperatureReading);
 				data.add(PiClockSpeedReading);
 				data.add(PiMemoryUsageReading);
